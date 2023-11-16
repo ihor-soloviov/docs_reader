@@ -1,23 +1,21 @@
 const mammoth = require("mammoth");
 
-const keys = [
-  "PV-Generatorleistung",
-  "PV-Generatorenergie (AC-Netz)",
-  "Autarkiegrad",
-  "Gesamtverbrauch",
-  "Spezifische Einspeisevergütung",
-  "Amortisationsdauer",
-  "Kumulierter Cashflow",
-  "Arbeitspreis",
-];
-
 class DocxProcessor {
-  constructor(keys) {
-    this.keys = keys;
-    this.data = [];
+  constructor() {
+    this.keys = [
+      "PV-Generatorleistung",
+      "PV-Generatorenergie (AC-Netz)",
+      "Autarkiegrad",
+      "Gesamtverbrauch",
+      "Spezifische Einspeisevergütung",
+      "Amortisationsdauer",
+      "Kumulierter Cashflow",
+      "Arbeitspreis",
+    ];
   }
 
   async searchKeywordsInDocx(docxFilePath) {
+    const data = [];
     const result = await mammoth.extractRawText({ path: docxFilePath });
     const tables = result.value.split("\n").filter((el) => el.trim() !== "");
 
@@ -40,7 +38,7 @@ class DocxProcessor {
             dataTitle = "Anlagenertrag p.a";
             break;
 
-          case "Gesamtverbrauch":
+          case "Verbraucher":
             dataTitle = "Jahresverbrauch";
             break;
 
@@ -56,12 +54,16 @@ class DocxProcessor {
             dataTitle = "Gewinn nach 20 Jahren**";
             break;
 
+          case "Arbeitspreis":
+            dataTitle = "Arbeitspreis";
+            break;
+
           default:
             dataTitle = "Autarkiegrad";
             break;
         }
 
-        this.data.push({
+        data.push({
           title: dataTitle,
           number: array[index + 1],
           measurement: array[index + 2],
@@ -69,8 +71,8 @@ class DocxProcessor {
       }
     });
 
-    return this.data;
+    return data;
   }
 }
 
-module.exports = new DocxProcessor(keys);
+module.exports = new DocxProcessor();
