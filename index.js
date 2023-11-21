@@ -9,4 +9,4 @@ app.use(express.json());
 
 app.use(router);
 
-app.listen(8080, () => console.log("started on 8080"));
+app.listen(8082, () => console.log("started on 8082"));
