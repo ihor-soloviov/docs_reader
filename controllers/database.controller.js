@@ -28,6 +28,10 @@ class DatabaseController {
         preis,
         image,
         speicher,
+        material,
+        abmessungen,
+        gewicht,
+        energieverbrauch,
       } = req.body;
 
       const { table_name } = req.query;
@@ -46,27 +50,60 @@ class DatabaseController {
               garantie,
               header,
               preis,
-              image
+              image,
             ],
           };
           break;
-        
-          case "batteries":
-            query = {
-              text: `insert into batteries (hersteller, modell, speicher, garantie, header, preis, image) values ( $1, $2, $3, $4, $5, $6, $7) returning *`,
-              values: [
-                hersteller,
-                modell,
-                speicher,
-                garantie,
-                header,
-                preis,
-                image
-              ],
-            };
+
+        case "batteries":
+          query = {
+            text: `insert into batteries (hersteller, modell, speicher, garantie, header, preis, image) values ( $1, $2, $3, $4, $5, $6, $7) returning *`,
+            values: [
+              hersteller,
+              modell,
+              speicher,
+              garantie,
+              header,
+              preis,
+              image,
+            ],
+          };
+
+        case "alpha_platte":
+          query = {
+            text: `insert into alpha_platte (hersteller, modell, material, abmessungen, gewicht, garantie, header, preis, image) values ( $1, $2, $3, $4, $5, $6, $7, $8, $9) returning *`,
+            values: [
+              hersteller,
+              modell,
+              material,
+              abmessungen,
+              gewicht,
+              garantie,
+              header,
+              preis,
+              image,
+            ],
+          };
+
+        case "smartmeters":
+          query = {
+            text: `insert into smartmeters (hersteller, modell, energieverbrauch, garantie, header, preis, image) values ( $1, $2, $3, $4, $5, $6, $7) returning *`,
+            values: [
+              hersteller,
+              modell,
+              energieverbrauch,
+              garantie,
+              header,
+              preis,
+              image,
+            ],
+          };
 
         default:
-          break;
+          query = {
+            text: `insert into ${table_name} (hersteller, modell, garantie, header, preis, image) values ( $1, $2, $3, $4, $5, $6) returning *`,
+            values: [hersteller, modell, garantie, header, preis, image],
+          };
       }
 
       const result = await db.query(query);
