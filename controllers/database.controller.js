@@ -72,14 +72,13 @@ class DatabaseController {
 
         case "alpha_platte":
           query = {
-            text: `insert into alpha_platte (hersteller, modell, material, abmessungen, gewicht, garantie, header, preis, image) values ( $1, $2, $3, $4, $5, $6, $7, $8, $9) returning *`,
+            text: `insert into alpha_platte (hersteller, modell, material, abmessungen, gewicht, header, preis, image) values ( $1, $2, $3, $4, $5, $6, $7, $8) returning *`,
             values: [
               hersteller,
               modell,
               material,
               abmessungen,
               gewicht,
-              garantie,
               header,
               preis,
               image,
