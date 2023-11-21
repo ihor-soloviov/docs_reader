@@ -68,6 +68,7 @@ class DatabaseController {
               image,
             ],
           };
+          break;
 
         case "alpha_platte":
           query = {
@@ -84,6 +85,7 @@ class DatabaseController {
               image,
             ],
           };
+          break;
 
         case "smartmeters":
           query = {
@@ -97,12 +99,14 @@ class DatabaseController {
               image,
             ],
           };
+          break;
 
         default:
           query = {
             text: `insert into ${table_name} (hersteller, modell, garantie, header, preis, image) values ( $1, $2, $3, $4, $5, $6) returning *`,
             values: [hersteller, modell, garantie, header, preis, image],
           };
+          break;
       }
 
       const result = await db.query(query);
