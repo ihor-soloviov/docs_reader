@@ -82,6 +82,33 @@ class DatabaseController {
       res.status(404).send("Помилка при додаванні значення в колонку");
     }
   }
+
+  async deleteRow(req, res) {
+    console.log("delete row ");
+    try {
+      const { modell } = req.body;
+      const { table_name } = req.query;
+
+      if (!modell) {
+        return res.status(400).json({ error: "modell не надана." });
+      }
+
+      const query = {
+        text: `DELETE FROM ${table_name} WHERE modell = $1`,
+        values: [modell],
+      };
+
+      const result = await db.query(query);
+
+      if (result.rowCount === 0) {
+        return res
+          .status(404)
+          .json({ error: "Рядок з вказаним modell не знайдено." });
+      }
+
+      res.status(200).json({ message: "Дані успішно видалено з таблиці." });
+    } catch (error) {}
+  }
 }
 
 module.exports = new DatabaseController();

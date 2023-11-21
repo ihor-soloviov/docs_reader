@@ -11,6 +11,7 @@ router.post(
 );
 router.post("/addRow", databaseController.addRow);
 router.get("/getTable", databaseController.getDataFromTable);
-router.post("/addDataToColumn", databaseController.addDataToColumn)
+router.post("/addDataToColumn", databaseController.addDataToColumn);
+router.delete("/deleteRow", databaseController.deleteRow);
 
 module.exports = router;
