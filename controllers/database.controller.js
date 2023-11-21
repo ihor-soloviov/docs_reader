@@ -87,7 +87,7 @@ class DatabaseController {
 
         case "smartmeters":
           query = {
-            text: `insert into smartmeters (hersteller, modell, energieverbrauch, header, preis, image) values ( $1, $2, $3, $4, $5, $6, $7) returning *`,
+            text: `insert into smartmeters (hersteller, modell, energieverbrauch, header, preis, image) values ( $1, $2, $3, $4, $5, $6) returning *`,
             values: [
               hersteller,
               modell,
