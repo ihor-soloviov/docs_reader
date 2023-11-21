@@ -26,25 +26,49 @@ class DatabaseController {
         garantie,
         header,
         preis,
+        speicher = '',
       } = req.body;
-      
+
       const { table_name } = req.query;
+      let query;
 
-      const newRow = await db.query(
-        `insert into ${table_name} (hersteller, modell, leistung, mpp, max_wirkungsgrad, garantie, header, preis) values ( $1, $2, $3, $4, $5, $6, $7,$8 ) returning *`,
-        [
-          hersteller,
-          modell,
-          leistung,
-          mpp,
-          max_wirkungsgrad,
-          garantie,
-          header,
-          preis,
-        ]
-      );
+      switch (table_name) {
+        case "inverters":
+          query = {
+            text: `insert into inverters (hersteller, modell, leistung, mpp, max_wirkungsgrad, garantie, header, preis) values ( $1, $2, $3, $4, $5, $6, $7,$8 ) returning *`,
+            values: [
+              hersteller,
+              modell,
+              leistung,
+              mpp,
+              max_wirkungsgrad,
+              garantie,
+              header,
+              preis,
+            ],
+          };
+          break;
+        
+          case "batteries":
+            query = {
+              text: `insert into batteries (hersteller, modell, speicher, garantie, header, preis) values ( $1, $2, $3, $4, $5, $6) returning *`,
+              values: [
+                hersteller,
+                modell,
+                speicher,
+                garantie,
+                header,
+                preis,
+              ],
+            };
 
-      res.send(newRow.rows);
+        default:
+          break;
+      }
+
+      const result = await db.query(query);
+
+      res.send(result.rows);
     } catch (error) {
       console.log(error);
       res.status(404).send("Помилка при додаванні рядку");
@@ -108,7 +132,10 @@ class DatabaseController {
       }
 
       res.status(200).json({ message: "Дані успішно видалено з таблиці." });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
   }
 }
 
