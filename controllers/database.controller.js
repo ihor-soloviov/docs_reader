@@ -26,7 +26,8 @@ class DatabaseController {
         garantie,
         header,
         preis,
-        speicher = '',
+        image,
+        speicher,
       } = req.body;
 
       const { table_name } = req.query;
@@ -35,7 +36,7 @@ class DatabaseController {
       switch (table_name) {
         case "inverters":
           query = {
-            text: `insert into inverters (hersteller, modell, leistung, mpp, max_wirkungsgrad, garantie, header, preis) values ( $1, $2, $3, $4, $5, $6, $7,$8 ) returning *`,
+            text: `insert into inverters (hersteller, modell, leistung, mpp, max_wirkungsgrad, garantie, header, preis, image) values ( $1, $2, $3, $4, $5, $6, $7, $8, $9 ) returning *`,
             values: [
               hersteller,
               modell,
@@ -45,13 +46,14 @@ class DatabaseController {
               garantie,
               header,
               preis,
+              image
             ],
           };
           break;
         
           case "batteries":
             query = {
-              text: `insert into batteries (hersteller, modell, speicher, garantie, header, preis) values ( $1, $2, $3, $4, $5, $6) returning *`,
+              text: `insert into batteries (hersteller, modell, speicher, garantie, header, preis, image) values ( $1, $2, $3, $4, $5, $6, $7) returning *`,
               values: [
                 hersteller,
                 modell,
@@ -59,6 +61,7 @@ class DatabaseController {
                 garantie,
                 header,
                 preis,
+                image
               ],
             };
 
