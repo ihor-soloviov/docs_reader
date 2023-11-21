@@ -10,5 +10,6 @@ router.post(
   filesController.getDataFromDocx
 );
 router.post("/addRow", databaseController.addRow);
+router.get("/getTable", databaseController.getDataFromTable)
 
 module.exports = router;
