@@ -9,10 +9,15 @@ class ItemsDatabaseController {
       const { hersteller } = req.body;
       let allData = await db.query(`select * from ${table_name}`);
 
+      let allData;
+
       if (hersteller) {
         allData = await db.query(
-          `select * from ${table_name} where hersteller = ${hersteller}`
+          `SELECT * FROM ${table_name} WHERE hersteller = $1`,
+          [hersteller]
         );
+      } else {
+        allData = await db.query(`SELECT * FROM ${table_name}`);
       }
 
       res.send(allData.rows);
