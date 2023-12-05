@@ -5,8 +5,11 @@ class DatabaseController {
     try {
       console.log("getData");
 
-      const { table_name } = req.query;
-      const allData = await db.query(`select * from ${table_name}`);
+      const { table_name, hersteller } = req.query;
+      const allData = await db.query(
+        `select * from ${table_name} where hersteller = $1`,
+        [hersteller]
+      );
 
       res.send(allData.rows);
     } catch (error) {
@@ -179,7 +182,6 @@ class DatabaseController {
       res.status(500).send(error);
     }
   }
-  
 }
 
 module.exports = new DatabaseController();

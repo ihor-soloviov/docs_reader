@@ -4,13 +4,12 @@ class ItemsDatabaseController {
   async getDataFromTable(req, res) {
     try {
       console.log("getData");
-
+  
       const { table_name } = req.query;
       const { hersteller } = req.body;
-      let allData = await db.query(`select * from ${table_name}`);
-
+  
       let allData;
-
+  
       if (hersteller) {
         allData = await db.query(
           `SELECT * FROM ${table_name} WHERE hersteller = $1`,
@@ -19,10 +18,12 @@ class ItemsDatabaseController {
       } else {
         allData = await db.query(`SELECT * FROM ${table_name}`);
       }
-
+  
       res.send(allData.rows);
     } catch (error) {
-      res.send(error);
+      console.error(error);
+      // Відправлення відповіді про помилку з відповідним HTTP статусом
+      res.status(500).send({ error: 'Internal Server Error' });
     }
   }
 
