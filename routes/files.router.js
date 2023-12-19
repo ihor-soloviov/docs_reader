@@ -1,7 +1,7 @@
 const Router = require("express");
 const router = new Router();
 const upload = require("../middleware/uploads");
-const mainPicStor = require("../middleware/picturesSaver");
+const picturesStore = require("../middleware/picturesSaver");
 const filesController = require("../controllers/files.controller");
 const databaseController = require("../controllers/database.controller");
 
@@ -10,9 +10,20 @@ router.post(
   upload.single("docxFile"),
   filesController.getDataFromDocx
 );
-router.post("/mainImage/:angebot_id", mainPicStor.single("mainImage"), (req, res) => {
-  res.send("Файл успішно завантажено");
-});
+router.post(
+  "/mainImage/:angebot_id/:dir",
+  picturesStore.single("mainImage"),
+  (req, res) => {
+    res.send("Файл успішно завантажено");
+  }
+);
+router.post(
+  "/additionalImage/:angebot_id/:dir",
+  picturesStore.single("additionalImage"),
+  (req, res) => {
+    res.send("Файл успішно завантажено");
+  }
+);
 router.post("/addRow", databaseController.addRow);
 router.get("/getTable", databaseController.getDataFromTable);
 router.post("/addDataToColumn", databaseController.addDataToColumn);

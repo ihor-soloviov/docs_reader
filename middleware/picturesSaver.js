@@ -4,29 +4,24 @@ const fs = require("fs");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const angebotId = req.params.angebot_id;
-    console.log(angebotId)
-    const angebotDir = `uploadsPictures/${angebotId}`;
-    const mainPictureDir = `${angebotDir}/mainPicture`;
+    const typeOfDirectory = req.params.dir; // Переконайтеся, що цей параметр передається у маршруті
 
-    // Створення піддиректорій, якщо вони не існують
+    const angebotDir = `uploadsPictures/${angebotId}`;
+    const pictureDir = `${angebotDir}/${typeOfDirectory}`;
+
     try {
-      if (!fs.existsSync(angebotDir)) {
-        fs.mkdirSync(angebotDir, { recursive: true });
+      if (!fs.existsSync(pictureDir)) {
+        fs.mkdirSync(pictureDir, { recursive: true });
       }
-      if (!fs.existsSync(mainPictureDir)) {
-        fs.mkdirSync(mainPictureDir, { recursive: true });
-      }
-      cb(null, mainPictureDir);
+      cb(null, pictureDir);
     } catch (error) {
       console.error("Помилка при створенні директорій:", error);
       cb(error);
     }
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname); // Використання оригінального імені файлу
+    cb(null, file.originalname);
   },
 });
 
-const mainPicStor = multer({ storage });
-
-module.exports = mainPicStor
+module.exports = multer({ storage });
