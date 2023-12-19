@@ -1,7 +1,7 @@
 const multer = require("multer");
 const fs = require("fs");
 
-const mainPicStor = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const angebotId = req.body.angebot_id;
     const angebotDir = `uploadsPictures/${angebotId}`;
@@ -26,4 +26,6 @@ const mainPicStor = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: mainPicStor });
+const mainPicStor = multer({ storage });
+
+module.exports = mainPicStor
