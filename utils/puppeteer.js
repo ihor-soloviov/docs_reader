@@ -1,3 +1,5 @@
+const puppeteer = require('puppeteer');
+
 async function generatePDF(dynamicId) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
