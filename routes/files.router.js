@@ -10,7 +10,7 @@ router.post(
   upload.single("docxFile"),
   filesController.getDataFromDocx
 );
-router.post("/mainImage", mainPicStor.single("mainImage"), (req, res) => {
+router.post("/mainImage/:angebot_id", mainPicStor.single("mainImage"), (req, res) => {
   res.send("Файл успішно завантажено");
 });
 router.post("/addRow", databaseController.addRow);

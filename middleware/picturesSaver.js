@@ -3,7 +3,8 @@ const fs = require("fs");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const angebotId = req.body.angebot_id;
+    const angebotId = req.params.angebot_id;
+    console.log(angebotId)
     const angebotDir = `uploadsPictures/${angebotId}`;
     const mainPictureDir = `${angebotDir}/mainPicture`;
 
