@@ -16,6 +16,8 @@ class FilesController {
       res.status(500).send("Помилка обробки файлу");
     }
   }
+
+  async 
 }
 
 module.exports = new FilesController();
