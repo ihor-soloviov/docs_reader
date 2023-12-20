@@ -9,7 +9,7 @@ async function generatePDF(dynamicId) {
 
   const dynamicURL = `https://generator.work-set.eu/${dynamicId}`;
   await page.goto(dynamicURL, { waitUntil: "networkidle2" });
-  await page.waitFor(2000);
+  await page.waitForTimeout(12000);
   // Додаткові дії, наприклад, генерація PDF
   await page.pdf({
     path: "output.pdf",

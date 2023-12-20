@@ -25,13 +25,15 @@ router.post(
     res.send("Файл успішно завантажено");
   }
 );
-router.get("/create", async (req,res) => {
+router.get("/create", async (req, res) => {
   try {
-    await generatePDF('123')
+    await generatePDF("123");
+
+    res.send("done");
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-})
+});
 router.post("/addRow", databaseController.addRow);
 router.get("/getTable", databaseController.getDataFromTable);
 router.post("/addDataToColumn", databaseController.addDataToColumn);
