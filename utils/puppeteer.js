@@ -9,13 +9,14 @@ async function generatePDF(dynamicId) {
 
   const dynamicURL = `https://generator.work-set.eu/${dynamicId}`;
   await page.goto(dynamicURL, { waitUntil: "networkidle2" });
-  await page.waitForTimeout(12000);
+  await page.waitForTimeout(2000);
   // Додаткові дії, наприклад, генерація PDF
   await page.pdf({
     path: "output.pdf",
     format: undefined,
-    width: "595px", // Ширина сторінки
-    height: "842px",
+    width: "1190px", // Ширина сторінки
+    height: "1684px",
+    printBackground: true,
   });
 
   await browser.close();
