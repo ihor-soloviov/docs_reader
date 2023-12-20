@@ -11,7 +11,12 @@ async function generatePDF(dynamicId) {
   await page.goto(dynamicURL, { waitUntil: "networkidle2" });
   await page.waitFor(2000);
   // Додаткові дії, наприклад, генерація PDF
-  await page.pdf({ path: "output.pdf", format: "A4" });
+  await page.pdf({
+    path: "output.pdf",
+    format: undefined,
+    width: "595px", // Ширина сторінки
+    height: "842px",
+  });
 
   await browser.close();
 }
