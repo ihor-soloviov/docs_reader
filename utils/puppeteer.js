@@ -14,8 +14,8 @@ async function generatePDF(dynamicId) {
   await page.pdf({
     path: "output.pdf",
     format: undefined,
-    width: "1190px", // Ширина сторінки
-    height: "1684px",
+    width: "595px", // Ширина сторінки
+    height: "842px",
     printBackground: true,
   });
 
