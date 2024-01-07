@@ -184,13 +184,13 @@ class DatabaseController {
   }
 
   async saveAngebotInfo(req, res) {
-    console.log('asaa')
+    console.log("asaa");
     try {
-      const { dataToSave } = req.body;
+      const dataToGenerator  = req.body;
 
       // Збереження даних в таблицю
       await Promise.all(
-        dataToSave.map(async (data) => {
+        dataToGenerator.map(async (data) => {
           const columns = Object.keys(data).join(", ");
           const values = Object.values(data);
 
