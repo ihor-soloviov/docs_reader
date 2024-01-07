@@ -182,6 +182,30 @@ class DatabaseController {
       res.status(500).send(error);
     }
   }
+
+  async saveAngebotInfo(req, res) {
+    try {
+      const { dataToSave } = req.body;
+
+      // Збереження даних в таблицю
+      await Promise.all(
+        dataToSave.map(async (data) => {
+          const columns = Object.keys(data).join(", ");
+          const values = Object.values(data);
+
+          const query = `INSERT INTO angebot_info (${columns}) VALUES (${values
+            .map((_, index) => `$${index + 1}`)
+            .join(", ")})`;
+          await db.query(query, values);
+        })
+      );
+
+      res.status(201).json({ message: "Дані успішно збережено в таблицю." });
+    } catch (error) {
+      console.error("Помилка при збереженні даних:", error);
+      res.status(500).json({ error: "Помилка сервера" });
+    }
+  }
 }
 
 module.exports = new DatabaseController();

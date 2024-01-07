@@ -17,7 +17,6 @@ class FilesController {
     }
   }
 
-  async 
 }
 
 module.exports = new FilesController();
