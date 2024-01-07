@@ -193,13 +193,33 @@ class DatabaseController {
     try {
       const dataToGenerator = req.body;
 
-      console.log(Object.keys(dataToGenerator))
+      if (
+        !dataToGenerator ||
+        !Array.isArray(dataToGenerator) ||
+        dataToGenerator.length === 0
+      ) {
+        return res.status(400).json({ message: "Невірні дані для вставки" });
+      }
 
-      // Збереження даних в таблицю
-      // const query = {
-      //   text: `INSERT INTO angebot_info ${Object.keys(dataToGenerator)}`,
-      //   values:
-      // };
+      const columns = Object.keys(dataToGenerator[0]);
+      const values = dataToGenerator.map((data, index) =>
+        columns
+          .map(
+            (column) =>
+              `$${index * columns.length + columns.indexOf(column) + 1}`
+          )
+          .join(", ")
+      );
+
+      const query = {
+        text: `INSERT INTO angebot_info(${columns.join(
+          ", "
+        )}) VALUES(${values.join("), (")})`,
+        values: dataToGenerator.map((data) => Object.values(data)).flat(),
+      };
+
+      // Виконуємо запит до бази даних
+      await client.query(query);
 
       res.status(201).json({ message: "Дані успішно збережено в таблицю." });
     } catch (error) {
