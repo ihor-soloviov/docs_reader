@@ -6,6 +6,11 @@ class DatabaseController {
       console.log("getData");
 
       const { table_name, hersteller } = req.query;
+      if (!hersteller) {
+        const angebotInfo = await db.query(`select * from ${table_name}`);
+
+        res.send(angebotInfo)
+      }
       const allData = await db.query(
         `select * from ${table_name} where hersteller = $1`,
         [hersteller]
@@ -186,7 +191,7 @@ class DatabaseController {
   async saveAngebotInfo(req, res) {
     console.log("asaa");
     try {
-      const dataToGenerator  = req.body;
+      const dataToGenerator = req.body;
 
       // Збереження даних в таблицю
       await Promise.all(
