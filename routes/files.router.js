@@ -35,7 +35,7 @@ router.get("/create", async (req, res) => {
   }
 });
 
-router.post("dataToGenerator" );
+router.post("/dataToGenerator", databaseController.saveAngebotInfo);
 router.post("/addRow", databaseController.addRow);
 router.get("/getTable", databaseController.getDataFromTable);
 router.post("/addDataToColumn", databaseController.addDataToColumn);

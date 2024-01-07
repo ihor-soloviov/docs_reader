@@ -184,6 +184,7 @@ class DatabaseController {
   }
 
   async saveAngebotInfo(req, res) {
+    console.log('asaa')
     try {
       const { dataToSave } = req.body;
 
