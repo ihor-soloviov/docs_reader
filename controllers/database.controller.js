@@ -9,7 +9,7 @@ class DatabaseController {
       if (!hersteller) {
         const angebotInfo = await db.query(`select * from ${table_name}`);
 
-        res.send(angebotInfo)
+        res.send(angebotInfo);
       }
       const allData = await db.query(
         `select * from ${table_name} where hersteller = $1`,
@@ -193,18 +193,13 @@ class DatabaseController {
     try {
       const dataToGenerator = req.body;
 
-      // Збереження даних в таблицю
-      await Promise.all(
-        dataToGenerator.map(async (data) => {
-          const columns = Object.keys(data).join(", ");
-          const values = Object.values(data);
+      console.log(Object.keys(dataToGenerator))
 
-          const query = `INSERT INTO angebot_info (${columns}) VALUES (${values
-            .map((_, index) => `$${index + 1}`)
-            .join(", ")})`;
-          await db.query(query, values);
-        })
-      );
+      // Збереження даних в таблицю
+      // const query = {
+      //   text: `INSERT INTO angebot_info ${Object.keys(dataToGenerator)}`,
+      //   values:
+      // };
 
       res.status(201).json({ message: "Дані успішно збережено в таблицю." });
     } catch (error) {
