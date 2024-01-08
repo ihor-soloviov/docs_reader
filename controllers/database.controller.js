@@ -191,39 +191,37 @@ class DatabaseController {
   async saveAngebotInfo(req, res) {
     console.log("asaa");
     try {
-      const { combinedObject } = req.body;
+      const combinedObject = req.body;
       console.log(combinedObject);
 
-      // if (
-      //   !dataToGenerator ||
-      //   !Array.isArray(dataToGenerator) ||
-      //   dataToGenerator.length === 0
-      // ) {
-      //   return res.status(400).json({ message: "Невірні дані для вставки" });
-      // }
+      const {
+        angebotId = null,
+        angebotType = null,
+        montage = null,
+        underConstructions = null,
+        pvModule = null,
+        invertor = null,
+        battery = null,
+        wallbox = null,
+        taubenschutz = null,
+        zusatzarbeiten = null,
+      } = combinedObject;
 
-      // const columns = dataToGenerator.forEach(el => Object.keys(el)[0])
-      // const values = dataToGenerator.map((data, index) =>
-      //   columns
-      //     .map(
-      //       (column) =>
-      //         `$${index * columns.length + columns.indexOf(column) + 1}`
-      //     )
-      //     .join(", ")
-      // );
-
-      // console.log(columns.join(', '))
-      // console.log(values)
-
-      // const query = {
-      //   text: `INSERT INTO angebot_info (${columns.join(
-      //     ", "
-      //   )}) VALUES(${values.join(', ')})`,
-      //   values: dataToGenerator.map((data) => Object.values(data)).flat(),
-      // };
-
-      // Виконуємо запит до бази даних
-      // await db.query(query);
+      const result = await db.query(
+        "INSERT INTO angebot_info (angebotId, angebotType, montage, underConstructions, pvModule, invertor, battery, wallbox, taubenschutz,  zusatzarbeiten) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+        [
+          angebotId,
+          angebotType,
+          montage,
+          underConstructions,
+          pvModule,
+          invertor,
+          battery,
+          wallbox,
+          taubenschutz,
+          zusatzarbeiten,
+        ]
+      );
 
       res.status(201).json({ message: "Дані успішно збережено в таблицю." });
     } catch (error) {
