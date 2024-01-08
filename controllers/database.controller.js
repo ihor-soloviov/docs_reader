@@ -6,19 +6,20 @@ class DatabaseController {
       console.log("getData");
 
       const { table_name, hersteller } = req.query;
+
       if (!hersteller) {
-        const angebotInfo = await db.query(`select * from ${table_name}`);
-
-        res.send(angebotInfo);
+        const angebotInfo = await db.query(`SELECT * FROM ${table_name}`);
+        res.send(angebotInfo.rows);
+      } else {
+        const allData = await db.query(
+          `SELECT * FROM ${table_name} WHERE hersteller = $1`,
+          [hersteller]
+        );
+        res.send(allData.rows);
       }
-      const allData = await db.query(
-        `select * from ${table_name} where hersteller = $1`,
-        [hersteller]
-      );
-
-      res.send(allData.rows);
     } catch (error) {
-      res.send(error);
+      console.error(error);
+      res.status(500).send(error.message);
     }
   }
 
