@@ -191,35 +191,39 @@ class DatabaseController {
   async saveAngebotInfo(req, res) {
     console.log("asaa");
     try {
-      const dataToGenerator = req.body;
+      const { combinedObject } = req.body;
+      console.log(combinedObject);
 
-      if (
-        !dataToGenerator ||
-        !Array.isArray(dataToGenerator) ||
-        dataToGenerator.length === 0
-      ) {
-        return res.status(400).json({ message: "Невірні дані для вставки" });
-      }
+      // if (
+      //   !dataToGenerator ||
+      //   !Array.isArray(dataToGenerator) ||
+      //   dataToGenerator.length === 0
+      // ) {
+      //   return res.status(400).json({ message: "Невірні дані для вставки" });
+      // }
 
-      const columns = Object.keys(dataToGenerator[0]);
-      const values = dataToGenerator.map((data, index) =>
-        columns
-          .map(
-            (column) =>
-              `$${index * columns.length + columns.indexOf(column) + 1}`
-          )
-          .join(", ")
-      );
+      // const columns = dataToGenerator.forEach(el => Object.keys(el)[0])
+      // const values = dataToGenerator.map((data, index) =>
+      //   columns
+      //     .map(
+      //       (column) =>
+      //         `$${index * columns.length + columns.indexOf(column) + 1}`
+      //     )
+      //     .join(", ")
+      // );
 
-      const query = {
-        text: `INSERT INTO angebot_info(${columns.join(
-          ", "
-        )}) VALUES(${values.join("), (")})`,
-        values: dataToGenerator.map((data) => Object.values(data)).flat(),
-      };
+      // console.log(columns.join(', '))
+      // console.log(values)
+
+      // const query = {
+      //   text: `INSERT INTO angebot_info (${columns.join(
+      //     ", "
+      //   )}) VALUES(${values.join(', ')})`,
+      //   values: dataToGenerator.map((data) => Object.values(data)).flat(),
+      // };
 
       // Виконуємо запит до бази даних
-      await client.query(query);
+      // await db.query(query);
 
       res.status(201).json({ message: "Дані успішно збережено в таблицю." });
     } catch (error) {
