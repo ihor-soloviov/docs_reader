@@ -223,7 +223,7 @@ class DatabaseController {
         ]
       );
 
-      res.status(201).json({ message: "Дані успішно збережено в таблицю." });
+      res.send({ message: "Дані успішно збережено в таблицю." });
     } catch (error) {
       console.error("Помилка при збереженні даних:", error);
       res.status(500).json({ error: "Помилка сервера" });
