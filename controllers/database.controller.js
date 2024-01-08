@@ -201,6 +201,7 @@ class DatabaseController {
         montage = null,
         underConstructions = null,
         pvModule = null,
+        pvsolFile = null,
         invertor = null,
         battery = null,
         wallbox = null,
@@ -209,13 +210,14 @@ class DatabaseController {
       } = combinedObject;
 
       const result = await db.query(
-        "INSERT INTO angebot_info (angebotId, angebotType, montage, underConstructions, pvModule, invertor, battery, wallbox, taubenschutz,  zusatzarbeiten) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+        "INSERT INTO angebot_info (angebotId, angebotType, montage, underConstructions, pvModule, pvsolFile, invertor, battery, wallbox, taubenschutz,  zusatzarbeiten) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)",
         [
           angebotId,
           angebotType,
           montage,
           underConstructions,
           pvModule,
+          pvsolFile,
           invertor,
           battery,
           wallbox,
