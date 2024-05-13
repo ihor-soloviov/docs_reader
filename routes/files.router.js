@@ -11,6 +11,7 @@ router.post(
   upload.single("docxFile"),
   filesController.getDataFromDocx
 );
+
 router.post(
   "/mainImage/:angebot_id/:dir",
   picturesStore.single("mainImage"),
@@ -18,6 +19,7 @@ router.post(
     res.send("Файл успішно завантажено");
   }
 );
+
 router.post(
   "/additionalImage/:angebot_id/:dir",
   picturesStore.single("additionalImage"),
@@ -25,6 +27,7 @@ router.post(
     res.send("Файл успішно завантажено");
   }
 );
+
 router.get("/create", async (req, res) => {
   try {
     await generatePDF("123");
