@@ -4,6 +4,7 @@ const upload = require("../middleware/uploads");
 const picturesStore = require("../middleware/picturesSaver");
 const filesController = require("../controllers/files.controller");
 const databaseController = require("../controllers/database.controller");
+const adminController = require("../controllers/admin.controller");
 const generatePDF = require("../utils/puppeteer");
 
 router.post(
@@ -43,5 +44,10 @@ router.post("/addRow", databaseController.addRow);
 router.get("/getTable", databaseController.getDataFromTable);
 router.post("/addDataToColumn", databaseController.addDataToColumn);
 router.delete("/deleteRow", databaseController.deleteRow);
+
+//admin
+
+router.get('/usual_services', adminController.getUsualServices)
+router.post('/add_usual_service', adminController.addUsualService)
 
 module.exports = router;

@@ -47,7 +47,6 @@ CREATE TABLE alpha_platte (
   image VARCHAR(100)
 );
 
-
 CREATE TABLE other (
   id SERIAL PRIMARY KEY NOT NULL,
   hersteller VARCHAR(50),
@@ -56,5 +55,14 @@ CREATE TABLE other (
   header VARCHAR(50),
   image VARCHAR(100)
 )
+
+CREATE TABLE usual_services (
+  id SERIAL PRIMARY KEY NOT NULL,
+  title VARCHAR(100),
+  description VARCHAR(150),
+  price numeric,
+  angebot_section VARCHAR(50)
+);
+
 
 insert into inverters values ('Huawei', 'SUN2000-3KTL-M1', '3.300VA', 2, '98.2%', '10 Jahre*')
