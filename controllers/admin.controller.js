@@ -3,9 +3,26 @@ const db = require("../db/db");
 class AdminController {
   getUsualServices = async (req, res) => {
     try {
-      const table = await db.query('SELECT * FROM usual_services');
+      const services = await db.query('SELECT * FROM usual_services');
 
-      if (table?.rows) {
+      if (services?.rows) {
+        res.send(table.rows)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  getUsualServiceBySection = async () => {
+    try {
+      const { angebot_section } = req.query
+      const query = {
+        text: `SELECT * FROM usual_services WHERE angebot_section = $1`,
+        value: [angebot_section]
+      }
+      const services = await db.query(query);
+
+      if (services?.rows) {
         res.send(table.rows)
       }
     } catch (error) {
@@ -20,9 +37,9 @@ class AdminController {
         text: `INSERT INTO usual_services (title, description, price, angebot_section) VALUES ($1, $2, $3, $4)`,
         values: [title, description, price, angebot_section]
       }
-      const table = await db.query(query);
+      const services = await db.query(query);
 
-      if (table?.rows) {
+      if (services?.rows) {
         res.send(table.rows)
       }
     } catch (error) {

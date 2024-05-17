@@ -47,6 +47,7 @@ router.delete("/deleteRow", databaseController.deleteRow);
 
 //admin
 
+router.get('/usual_service', adminController.getUsualServiceBySection)
 router.get('/usual_services', adminController.getUsualServices)
 router.post('/add_usual_service', adminController.addUsualService)
 
