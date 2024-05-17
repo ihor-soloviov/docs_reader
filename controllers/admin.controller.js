@@ -15,7 +15,7 @@ class AdminController {
 
   getUsualServiceBySection = async (req, res) => {
     try {
-      const { angebot_section } = req.query;
+      const { angebot_section } = req.params;
       if (!angebot_section) {
         return res.status(400).send({ message: 'angebot_section is required' });
       }
