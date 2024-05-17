@@ -3,7 +3,7 @@ const db = require("../db/db");
 class AdminController {
   getUsualServices = async (req, res) => {
     try {
-      const table = await db.query('SELECT * FROM ususal_services');
+      const table = await db.query('SELECT * FROM usual_services');
 
       if (table?.rows) {
         res.send(table.rows)
