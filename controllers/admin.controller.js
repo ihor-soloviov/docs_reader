@@ -1,7 +1,7 @@
 const db = require("../db/db");
 
 class AdminController {
-  getUsualServices = async (req, res) => {
+  getUsualServices = async (_req, res) => {
     try {
       const services = await db.query('SELECT * FROM usual_services');
 
@@ -13,7 +13,7 @@ class AdminController {
     }
   }
 
-  getUsualServiceBySection = async () => {
+  getUsualServiceBySection = async (req, res) => {
     try {
       const { angebot_section } = req.query
       const query = {
