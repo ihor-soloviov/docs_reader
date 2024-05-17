@@ -50,7 +50,7 @@ class AdminController {
       const services = await db.query(query);
 
       if (services?.rows) {
-        res.send(table.rows)
+        res.send(services.rows)
       }
     } catch (error) {
       console.error(error)
