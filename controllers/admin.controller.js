@@ -15,22 +15,30 @@ class AdminController {
 
   getUsualServiceBySection = async (req, res) => {
     try {
-      const { angebot_section } = req.query
+      const { angebot_section } = req.query;
+      if (!angebot_section) {
+        return res.status(400).send({ message: 'angebot_section is required' });
+      }
+
+      console.log("Received angebot_section:", angebot_section); 
+
       const query = {
         text: `SELECT * FROM usual_services WHERE angebot_section = $1`,
         values: [angebot_section]
       };
+
       const services = await db.query(query);
 
-      if (services?.rows) {
+      if (services?.rows.length > 0) {
         res.send(services.rows);
       } else {
         res.status(404).send({ message: 'No services found' });
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
+      res.status(500).send({ message: 'Server error' });
     }
-  }
+  };
 
   addUsualService = async (req, res) => {
     try {
