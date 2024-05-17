@@ -18,12 +18,14 @@ class AdminController {
       const { angebot_section } = req.query
       const query = {
         text: `SELECT * FROM usual_services WHERE angebot_section = $1`,
-        value: [angebot_section]
-      }
+        values: [angebot_section]
+      };
       const services = await db.query(query);
 
       if (services?.rows) {
-        res.send(table.rows)
+        res.send(services.rows);
+      } else {
+        res.status(404).send({ message: 'No services found' });
       }
     } catch (error) {
       console.error(error)
