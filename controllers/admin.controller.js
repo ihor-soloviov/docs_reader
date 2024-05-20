@@ -20,7 +20,7 @@ class AdminController {
         return res.status(400).send({ message: 'angebot_section is required' });
       }
 
-      console.log("Received angebot_section:", angebot_section); 
+      console.log("Received angebot_section:", angebot_section);
 
       const query = {
         text: `SELECT * FROM usual_services WHERE angebot_section = $1`,
@@ -30,7 +30,16 @@ class AdminController {
       const services = await db.query(query);
 
       if (services?.rows.length > 0) {
-        res.send(services.rows);
+        const result = services.rows.reduce((acc, service) => {
+          if (service.specific === 'single') {
+            acc.single.push(service);
+          } else if (service.specific === 'select') {
+            acc.select.push(service);
+          }
+          return acc;
+        }, { single: [], select: [] });
+
+        res.send(result);
       } else {
         res.status(404).send({ message: 'No services found' });
       }
@@ -42,10 +51,10 @@ class AdminController {
 
   addUsualService = async (req, res) => {
     try {
-      const { title, description, price, angebot_section } = req.body;
+      const { title, description, price, specific, angebot_section } = req.body;
       const query = {
-        text: `INSERT INTO usual_services (title, description, price, angebot_section) VALUES ($1, $2, $3, $4)`,
-        values: [title, description, price, angebot_section]
+        text: `INSERT INTO usual_services (title, description, price, specific, angebot_section) VALUES ($1, $2, $3, $4)`,
+        values: [title, description, price, specific, angebot_section]
       }
       const services = await db.query(query);
 

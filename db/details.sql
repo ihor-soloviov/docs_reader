@@ -61,6 +61,7 @@ CREATE TABLE usual_services (
   title VARCHAR(100),
   description VARCHAR(150),
   price numeric,
+  specific VARCHAR(25) NOT NULL,
   angebot_section VARCHAR(50)
 );
 
