@@ -1,5 +1,6 @@
 const db = require("../db/db");
-const { serviceSplitter } = require("../utils/serviceSplitter");
+const serviceSplitter = require("../utils/serviceSplitter");
+
 
 class AdminController {
   getUsualServices = async (_req, res) => {
