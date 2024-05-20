@@ -1,19 +1,19 @@
 const db = require("../db/db");
 
 class DatabaseController {
-  async getDataFromTable(req, res) {
+  async getCalculatorModules(req, res) {
     try {
-      console.log("getData");
+      console.log("getCalculatorModules");
 
-      const { table_name, hersteller } = req.query;
+      const { table_name, producer } = req.query;
 
-      if (!hersteller) {
+      if (!producer) {
         const angebotInfo = await db.query(`SELECT * FROM ${table_name}`);
         res.send(angebotInfo.rows);
       } else {
         const allData = await db.query(
           `SELECT * FROM ${table_name} WHERE hersteller = $1`,
-          [hersteller]
+          [producer]
         );
         res.send(allData.rows);
       }

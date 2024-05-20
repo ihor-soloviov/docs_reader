@@ -1,4 +1,5 @@
 const db = require("../db/db");
+const { serviceSplitter } = require("../utils/serviceSplitter");
 
 class AdminController {
   getUsualServices = async (_req, res) => {
@@ -29,20 +30,12 @@ class AdminController {
 
       const services = await db.query(query);
 
-      if (services?.rows.length > 0) {
-        const result = services.rows.reduce((acc, service) => {
-          if (service.specific === 'single') {
-            acc.single.push(service);
-          } else if (service.specific === 'select') {
-            acc.select.push(service);
-          }
-          return acc;
-        }, { single: [], select: [] });
-
-        res.send(result);
-      } else {
+      if (services.rows.length === 0) {
         res.status(404).send({ message: 'No services found' });
       }
+
+      const result = serviceSplitter(services.rows)
+      res.send(result);
     } catch (error) {
       console.error(error);
       res.status(500).send({ message: 'Server error' });

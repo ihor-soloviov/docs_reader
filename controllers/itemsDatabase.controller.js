@@ -1,7 +1,7 @@
 const db = require("../db/db");
 
 class ItemsDatabaseController {
-  async getDataFromTable(req, res) {
+  async getModuleFromTable(req, res) {
     try {
       console.log("getData");
   

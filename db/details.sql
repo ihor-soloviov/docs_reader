@@ -10,12 +10,13 @@ CREATE TABLE inverters (
 
 CREATE TABLE batteries (
   id SERIAL PRIMARY KEY NOT NULL,
-  hersteller VARCHAR(50),
-  modell VARCHAR(50),
-  speicher VARCHAR(50),
-  garantie VARCHAR(50),
+  producer VARCHAR(50),
+  model VARCHAR(50),
+  storage VARCHAR(50),
+  guarantee VARCHAR(50),
   header VARCHAR(50),
   image VARCHAR(100)
+  -- price 
 );
 
 CREATE TABLE optimizers (
@@ -67,3 +68,25 @@ CREATE TABLE usual_services (
 
 
 insert into inverters values ('Huawei', 'SUN2000-3KTL-M1', '3.300VA', 2, '98.2%', '10 Jahre*')
+
+
+
+
+ALTER TABLE wallbox
+RENAME COLUMN preis TO price;
+
+energieverbrauch => usage
+
+preis => price
+
+gewicht => dimensions
+
+hersteller => producer
+
+modell => model
+
+garantie => guarantee
+
+max_wirkungsgrad => max_efficiency
+
+leistung => power
