@@ -73,13 +73,13 @@ insert into inverters values ('Huawei', 'SUN2000-3KTL-M1', '3.300VA', 2, '98.2%'
 
 
 ALTER TABLE wallbox
-RENAME COLUMN preis TO price;
+RENAME COLUMN garantie TO guarantee;
 
 energieverbrauch => usage
 
 preis => price
 
-gewicht => dimensions
+gewicht => weight
 
 hersteller => producer
 

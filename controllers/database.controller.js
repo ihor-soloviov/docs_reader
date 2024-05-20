@@ -12,7 +12,7 @@ class DatabaseController {
         res.send(angebotInfo.rows);
       } else {
         const allData = await db.query(
-          `SELECT * FROM ${table_name} WHERE hersteller = $1`,
+          `SELECT * FROM ${table_name} WHERE producer = $1`,
           [producer]
         );
         res.send(allData.rows);
@@ -27,20 +27,20 @@ class DatabaseController {
     console.log("add row");
     try {
       const {
-        hersteller,
-        modell,
-        leistung,
+        producer,
+        model,
+        power,
         mpp,
-        max_wirkungsgrad,
-        garantie,
+        max_efficiency,
+        guarantee,
         header,
-        preis,
+        price,
         image,
-        speicher,
+        storage,
         material,
-        abmessungen,
-        gewicht,
-        energieverbrauch,
+        dimensions,
+        weight,
+        usage,
       } = req.body;
 
       const { table_name } = req.query;
@@ -49,16 +49,16 @@ class DatabaseController {
       switch (table_name) {
         case "inverters":
           query = {
-            text: `insert into inverters (hersteller, modell, leistung, mpp, max_wirkungsgrad, garantie, header, preis, image) values ( $1, $2, $3, $4, $5, $6, $7, $8, $9 ) returning *`,
+            text: `insert into inverters (producer, model, power, mpp, max_efficiency, guarantee, header, price, image) values ( $1, $2, $3, $4, $5, $6, $7, $8, $9 ) returning *`,
             values: [
-              hersteller,
-              modell,
-              leistung,
+              producer,
+              model,
+              power,
               mpp,
-              max_wirkungsgrad,
-              garantie,
+              max_efficiency,
+              guarantee,
               header,
-              preis,
+              price,
               image,
             ],
           };
@@ -66,14 +66,14 @@ class DatabaseController {
 
         case "batteries":
           query = {
-            text: `insert into batteries (hersteller, modell, speicher, garantie, header, preis, image) values ( $1, $2, $3, $4, $5, $6, $7) returning *`,
+            text: `insert into batteries (producer, model, storage, guarantee, header, price, image) values ( $1, $2, $3, $4, $5, $6, $7) returning *`,
             values: [
-              hersteller,
-              modell,
-              speicher,
-              garantie,
+              producer,
+              model,
+              storage,
+              guarantee,
               header,
-              preis,
+              price,
               image,
             ],
           };
@@ -81,15 +81,15 @@ class DatabaseController {
 
         case "alpha_platte":
           query = {
-            text: `insert into alpha_platte (hersteller, modell, material, abmessungen, gewicht, header, preis, image) values ( $1, $2, $3, $4, $5, $6, $7, $8) returning *`,
+            text: `insert into alpha_platte (producer, model, material, dimensions, weight, header, price, image) values ( $1, $2, $3, $4, $5, $6, $7, $8) returning *`,
             values: [
-              hersteller,
-              modell,
+              producer,
+              model,
               material,
-              abmessungen,
-              gewicht,
+              dimensions,
+              weight,
               header,
-              preis,
+              price,
               image,
             ],
           };
@@ -97,13 +97,13 @@ class DatabaseController {
 
         case "smartmeters":
           query = {
-            text: `insert into smartmeters (hersteller, modell, energieverbrauch, header, preis, image) values ( $1, $2, $3, $4, $5, $6) returning *`,
+            text: `insert into smartmeters (producer, model, usage, header, price, image) values ( $1, $2, $3, $4, $5, $6) returning *`,
             values: [
-              hersteller,
-              modell,
-              energieverbrauch,
+              producer,
+              model,
+              usage,
               header,
-              preis,
+              price,
               image,
             ],
           };
@@ -111,8 +111,8 @@ class DatabaseController {
 
         default:
           query = {
-            text: `insert into ${table_name} (hersteller, modell, garantie, header, preis, image) values ( $1, $2, $3, $4, $5, $6) returning *`,
-            values: [hersteller, modell, garantie, header, preis, image],
+            text: `insert into ${table_name} (producer, model, guarantee, header, price, image) values ( $1, $2, $3, $4, $5, $6) returning *`,
+            values: [producer, model, guarantee, header, price, image],
           };
           break;
       }
@@ -130,18 +130,18 @@ class DatabaseController {
     console.log("add data to column");
 
     try {
-      const { modell, column, value } = req.body;
+      const { model, column, value } = req.body;
       const { table_name } = req.query;
 
-      if (!modell || !column || !value) {
+      if (!model || !column || !value) {
         return res
           .status(400)
           .json({ error: "Не всі обов`язкові дані надані." });
       }
 
       const query = {
-        text: `UPDATE ${table_name} SET ${column} = $1 WHERE modell = $2`,
-        values: [value, modell],
+        text: `UPDATE ${table_name} SET ${column} = $1 WHERE model = $2`,
+        values: [value, model],
       };
 
       const result = await db.query(query);
@@ -149,7 +149,7 @@ class DatabaseController {
       if (result.rowCount === 0) {
         return res
           .status(404)
-          .json({ error: "Рядок з вказаним modell не знайдено." });
+          .json({ error: "Рядок з вказаним model не знайдено." });
       }
 
       res.status(200).json({ message: "Дані успішно оновлено в таблиці." });
@@ -162,16 +162,16 @@ class DatabaseController {
   async deleteRow(req, res) {
     console.log("delete row ");
     try {
-      const { modell } = req.body;
+      const { model } = req.body;
       const { table_name } = req.query;
 
-      if (!modell) {
-        return res.status(400).json({ error: "modell не надана." });
+      if (!model) {
+        return res.status(400).json({ error: "model не надана." });
       }
 
       const query = {
-        text: `DELETE FROM ${table_name} WHERE modell = $1`,
-        values: [modell],
+        text: `DELETE FROM ${table_name} WHERE model = $1`,
+        values: [model],
       };
 
       const result = await db.query(query);
@@ -179,7 +179,7 @@ class DatabaseController {
       if (result.rowCount === 0) {
         return res
           .status(404)
-          .json({ error: "Рядок з вказаним modell не знайдено." });
+          .json({ error: "Рядок з вказаним model не знайдено." });
       }
 
       res.status(200).json({ message: "Дані успішно видалено з таблиці." });
