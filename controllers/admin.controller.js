@@ -47,7 +47,7 @@ class AdminController {
     try {
       const { title, description, price, specific, angebot_section } = req.body;
       const query = {
-        text: `INSERT INTO usual_services (title, description, price, specific, angebot_section) VALUES ($1, $2, $3, $4)`,
+        text: `INSERT INTO usual_services (title, description, price, specific, angebot_section) VALUES ($1, $2, $3, $4, $5)`,
         values: [title, description, price, specific, angebot_section]
       }
       const services = await db.query(query);
