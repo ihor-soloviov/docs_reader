@@ -39,9 +39,10 @@ router.get("/create", async (req, res) => {
   }
 });
 
+router.get("/getCalculatorModules", databaseController.getCalculatorModules);
+router.gt("/getAllModules", databaseController.getAllModules)
 router.post("/dataToGenerator", databaseController.saveAngebotInfo);
 router.post("/addRow", databaseController.addRow);
-router.get("/getCalculatorModules", databaseController.getCalculatorModules);
 router.post("/addDataToColumn", databaseController.addDataToColumn);
 router.delete("/deleteRow", databaseController.deleteRow);
 
