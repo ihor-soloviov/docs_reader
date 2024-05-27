@@ -23,6 +23,34 @@ class DatabaseController {
     }
   }
 
+  async getAllModules(req, res) {
+    try {
+      const tables = [
+        'alpha_platte',
+        'batteries',
+        'gateway',
+        'inverters',
+        'optimizers',
+        'other',
+        'relay',
+        'smartmeters',
+        'wallbox',
+      ];
+
+      const results = {};
+
+      for (const table of tables) {
+        const queryResult = await pool.query(`SELECT * FROM ${table}`);
+        results[table] = queryResult.rows;
+      }
+
+      res.json(results)
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(error.message);
+    }
+  }
+
   async addRow(req, res) {
     console.log("add row");
     try {
