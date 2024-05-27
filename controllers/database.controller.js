@@ -37,14 +37,13 @@ class DatabaseController {
         'wallbox',
       ];
 
-      const results = {};
+      const allResults = [];
 
       for (const table of tables) {
-        const queryResult = await db.query(`SELECT * FROM ${table}`);
-        results[table] = queryResult.rows;
+        const queryResult = await db.query(`SELECT *, '${table}' AS table_name FROM ${table}`);
+        allResults.push(...queryResult.rows);
       }
-
-      res.json(results)
+      res.send(allResults)
     } catch (error) {
       console.error(error);
       res.status(500).send(error.message);
