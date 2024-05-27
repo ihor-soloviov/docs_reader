@@ -40,7 +40,7 @@ class DatabaseController {
       const results = {};
 
       for (const table of tables) {
-        const queryResult = await pool.query(`SELECT * FROM ${table}`);
+        const queryResult = await db.query(`SELECT * FROM ${table}`);
         results[table] = queryResult.rows;
       }
 
