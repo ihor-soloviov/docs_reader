@@ -50,8 +50,7 @@ class DatabaseController {
     }
   }
 
-  async addRow(req, res) {
-    console.log("add row");
+  async addModule(req, res) {
     try {
       const {
         producer,

@@ -42,7 +42,7 @@ router.get("/create", async (req, res) => {
 router.get("/getCalculatorModules", databaseController.getCalculatorModules);
 router.get("/getAllModules", databaseController.getAllModules)
 router.post("/dataToGenerator", databaseController.saveAngebotInfo);
-router.post("/addRow", databaseController.addRow);
+router.post("/addModule", databaseController.addModule);
 router.post("/addDataToColumn", databaseController.addDataToColumn);
 router.delete("/deleteRow", databaseController.deleteRow);
 
