@@ -66,6 +66,14 @@ CREATE TABLE usual_services (
   angebot_section VARCHAR(50)
 );
 
+CREATE TABLE iq_combiner (
+  id SERIAL PRIMARY KEY NOT NULL,
+  producer VARCHAR(50),
+  model VARCHAR(100),
+  description VARCHAR(150),
+  price numeric
+);
+
 
 insert into inverters values ('Huawei', 'SUN2000-3KTL-M1', '3.300VA', 2, '98.2%', '10 Jahre*')
 

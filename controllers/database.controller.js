@@ -67,6 +67,7 @@ class DatabaseController {
         dimensions,
         weight,
         usage,
+        description
       } = req.body;
 
       const { table_name } = req.query;
@@ -135,6 +136,13 @@ class DatabaseController {
           };
           break;
 
+        case "iq_combiner":
+          query = {
+            text: `insert into iq_combiner (producer, model, description, price) values ( $1, $2, $3, $4) returning *`,
+            values: [producer, model, description, price],
+
+          };
+          break;
         default:
           query = {
             text: `insert into ${table_name} (producer, model, guarantee, header, price, image) values ( $1, $2, $3, $4, $5, $6) returning *`,
