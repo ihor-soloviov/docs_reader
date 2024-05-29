@@ -59,6 +59,23 @@ class AdminController {
       console.error(error)
     }
   }
+
+  updateUsualService = async (req, res) => {
+    try {
+      const { id, newPrice } = req.body;
+
+      if (!id || !newPrice) {
+        res.status(404).send({ message: 'Missed required field' });
+      }
+
+      await db.query(query);
+
+      return res.status(200).send({ message: 'Service updated successfully' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send({ message: 'Internal Server Error' });
+    }
+  }
 }
 
 module.exports = new AdminController()

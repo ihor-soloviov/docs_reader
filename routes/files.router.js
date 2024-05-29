@@ -47,9 +47,9 @@ router.post("/addDataToColumn", databaseController.addDataToColumn);
 router.delete("/deleteRow", databaseController.deleteRow);
 
 //admin
-
 router.get('/usual_service/:angebot_section', adminController.getUsualServiceBySection)
 router.get('/usual_services', adminController.getUsualServices)
 router.post('/add_usual_service', adminController.addUsualService)
+router.patch('/update_usual_service', adminController.updateUsualService)
 
 module.exports = router;

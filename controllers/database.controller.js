@@ -34,6 +34,7 @@ class DatabaseController {
         'other',
         'relay',
         'smartmeters',
+        'iq_combiner',
         'wallbox',
       ];
 
