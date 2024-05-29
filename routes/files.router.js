@@ -45,10 +45,10 @@ router.post("/dataToGenerator", databaseController.saveAngebotInfo);
 router.post("/addModule", databaseController.addModule);
 router.post("/addDataToColumn", databaseController.addDataToColumn);
 router.delete("/deleteRow", databaseController.deleteRow);
-router.patch('/update_module', adminController.updateUsualService)
 
 //admin
 router.get('/usual_services', adminController.getUsualServices)
+router.get('/usual_service/:section', adminController.getUsualServiceBySection)
 router.post('/add_usual_service', adminController.addUsualService)
 router.patch('/update_usual_service', adminController.updateUsualService)
 
