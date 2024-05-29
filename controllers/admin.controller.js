@@ -61,16 +61,20 @@ class AdminController {
 
   updateUsualService = async (req, res) => {
     try {
-      const { id, newPrice } = req.body;
+      const { id, newPrice, table_name } = req.body;
 
       if (!id || !newPrice) {
-        res.status(404).send({ message: 'Missed required field' });
+        return res.status(404).send({ message: 'Missed required field' });
       }
 
-      const query = {
+      let query = {
         text: `UPDATE usual_services SET price = $1 WHERE id = $2`,
         values: [newPrice, id]
       };
+
+      if (table_name) {
+        query.text = `UPDATE ${table_name} SET price = $1 WHERE id = $2`;
+      }
 
       await db.query(query);
 
@@ -79,7 +83,8 @@ class AdminController {
       console.error(error);
       return res.status(500).send({ message: 'Internal Server Error' });
     }
-  }
+  };
+
 }
 
 module.exports = new AdminController()

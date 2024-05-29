@@ -3,25 +3,27 @@ const db = require("../db/db");
 class DatabaseController {
   async getCalculatorModules(req, res) {
     try {
-      console.log("getCalculatorModules");
-
       const { table_name, producer } = req.query;
 
-      if (!producer) {
-        const angebotInfo = await db.query(`SELECT * FROM ${table_name}`);
-        res.send(angebotInfo.rows);
-      } else {
-        const allData = await db.query(
-          `SELECT * FROM ${table_name} WHERE producer = $1`,
-          [producer]
-        );
-        res.send(allData.rows);
+      if (!table_name) {
+        return res.status(400).send("Parameter 'table_name' is required");
       }
+
+      const queryText = producer
+        ? `SELECT * FROM ${table_name} WHERE producer = $1`
+        : `SELECT * FROM ${table_name}`;
+
+      const queryParams = producer ? [producer] : [];
+
+      const result = await db.query(queryText, queryParams);
+
+      res.send(result.rows);
     } catch (error) {
       console.error(error);
-      res.status(500).send(error.message);
+      res.status(500).send("Internal Server Error");
     }
   }
+
 
   async getAllModules(req, res) {
     try {
