@@ -17,15 +17,15 @@ class AdminController {
 
   getUsualServiceBySection = async (req, res) => {
     try {
-      const { angebot_section } = req.params;
+      const { section } = req.params;
       
-      if (!angebot_section) {
+      if (!section) {
         return res.status(400).send({ message: 'angebot_section is required' });
       }
   
       const query = {
         text: `SELECT * FROM usual_services WHERE angebot_section = $1`,
-        values: [angebot_section]
+        values: [section]
       };
   
       const services = await db.query(query);
