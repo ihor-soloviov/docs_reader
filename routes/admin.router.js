@@ -1,5 +1,10 @@
 const Router = require("express");
+const adminController = require("../controllers/admin.controller");
 
 const adminRouter = new Router()
 
-adminRouter.get('/usual_service/:angebot_section', adminController.getUsualServiceBySection)
+adminRouter.post('/addService', adminController.addService)
+adminRouter.patch('/changePrice', adminController.changePrice)
+
+
+module.exports = adminRouter;

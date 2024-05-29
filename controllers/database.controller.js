@@ -1,7 +1,7 @@
 const db = require("../db/db");
 
 class DatabaseController {
-  async getCalculatorModules(req, res) {
+  async getModulesByTable(req, res) {
     try {
       const { table_name, producer } = req.query;
 
@@ -24,8 +24,7 @@ class DatabaseController {
     }
   }
 
-
-  async getAllModules(req, res) {
+  async getModules(req, res) {
     try {
       const tables = [
         'alpha_platte',
@@ -50,6 +49,45 @@ class DatabaseController {
     } catch (error) {
       console.error(error);
       res.status(500).send(error.message);
+    }
+  }
+
+  async getServices(_req, res) {
+    try {
+      const services = await db.query('SELECT * FROM usual_services');
+
+      if (services?.rows) {
+        res.send(services.rows)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async getServicesBySection(req, res) {
+    try {
+      const { section } = req.params;
+
+      if (!section) {
+        return res.status(400).send({ message: 'angebot_section is required' });
+      }
+
+      const query = {
+        text: `SELECT * FROM usual_services WHERE angebot_section = $1`,
+        values: [section]
+      };
+
+      const services = await db.query(query);
+
+      if (services.rows.length === 0) {
+        return res.status(404).send({ message: 'No services found' });
+      }
+
+      const result = serviceSplitter(services.rows);
+      return res.send(result);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send({ message: 'Server error' });
     }
   }
 
