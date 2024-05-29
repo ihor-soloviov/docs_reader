@@ -1,4 +1,5 @@
 const db = require("../db/db");
+const serviceSplitter = require("../utils/serviceSplitter");
 
 class DatabaseController {
   async getModulesByTable(req, res) {
@@ -61,6 +62,7 @@ class DatabaseController {
       }
     } catch (error) {
       console.error(error)
+      res.status(500).send(error.message);
     }
   }
 
