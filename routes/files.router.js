@@ -5,39 +5,17 @@ const picturesStore = require("../middleware/picturesSaver");
 const filesController = require("../controllers/files.controller");
 const databaseController = require("../controllers/database.controller");
 const adminController = require("../controllers/admin.controller");
-const generatePDF = require("../utils/puppeteer");
 
-router.post(
-  "/sendFile",
-  upload.single("docxFile"),
-  filesController.getDataFromDocx
-);
+router.post("/sendFile", upload.single("docxFile"), filesController.pvSolFileParser);
 
 router.post(
   "/mainImage/:angebot_id/:dir",
-  picturesStore.single("mainImage"),
-  (req, res) => {
-    res.send("Файл успішно завантажено");
-  }
-);
+  picturesStore.single("mainImage"), filesController.fileSaver);
 
 router.post(
-  "/additionalImage/:angebot_id/:dir",
-  picturesStore.single("additionalImage"),
-  (req, res) => {
-    res.send("Файл успішно завантажено");
-  }
-);
+  "/additionalImage/:angebot_id/:dir", picturesStore.single("additionalImage"), filesController.fileSaver);
 
-router.get("/create", async (req, res) => {
-  try {
-    await generatePDF("123");
-
-    res.send("done");
-  } catch (error) {
-    console.log(error);
-  }
-});
+router.get("/create", filesController.generateAngebot);
 
 router.get("/getCalculatorModules", databaseController.getCalculatorModules);
 router.get("/getAllModules", databaseController.getAllModules)

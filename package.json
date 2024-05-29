@@ -29,5 +29,12 @@
     "pg": "^8.11.3",
     "puppeteer": "^21.6.1",
     "word-extractor": "^1.0.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.3.0",
+    "eslint": "^9.3.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "globals": "^15.3.0"
   }
 }
