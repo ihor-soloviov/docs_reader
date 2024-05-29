@@ -68,6 +68,11 @@ class AdminController {
         res.status(404).send({ message: 'Missed required field' });
       }
 
+      const query = {
+        text: `UPDATE usual_services SET price = $1 WHERE id = $2`,
+        values: [newPrice, id]
+      };
+
       await db.query(query);
 
       return res.status(200).send({ message: 'Service updated successfully' });
