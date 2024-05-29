@@ -8,7 +8,7 @@ class AdminController {
       const services = await db.query('SELECT * FROM usual_services');
 
       if (services?.rows) {
-        res.send(table.rows)
+        res.send(services.rows)
       }
     } catch (error) {
       console.error(error)
@@ -22,7 +22,6 @@ class AdminController {
         return res.status(400).send({ message: 'angebot_section is required' });
       }
 
-      console.log("Received angebot_section:", angebot_section);
 
       const query = {
         text: `SELECT * FROM usual_services WHERE angebot_section = $1`,
