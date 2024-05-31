@@ -289,16 +289,7 @@ class ModulesController {
       } = combinedObject;
 
       await db.query(
-        `
-        INSERT INTO angebot_info (
-          angebot_id, 
-          angebot_type, 
-          montage, 
-          
-        ) VALUES (
-          $1, $2, $3
-        )
-      `,
+        `INSERT INTO angebots (angebot_id, angebot_type, montage) VALUES ($1, $2, $3) RETURNING *`,
         [
           angebotId,
           angebotType,
