@@ -18,7 +18,7 @@ class FilesController {
     }
   }
   async fileSaver(_req, res) {
-    res.send(res.send("Файл успішно завантажено"))
+    res.send("Файл успішно завантажено")
   }
   async generateAngebot(_req, res) {
     try {

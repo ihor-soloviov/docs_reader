@@ -74,6 +74,25 @@ CREATE TABLE iq_combiner (
   price numeric
 );
 
+CREATE TABLE angebots (
+  id SERIAL PRIMARY KEY NOT NULL,
+  angebot_id NUMERIC,
+  angebot_type VARCHAR(50),
+  montage JSONB[]
+);
+
+-- under_constructions,
+--   pvModule,
+--   pvsol_file,
+--   invertor,
+--   iq_combiner,
+--   optimizer,
+--   battery,
+--   wallbox,
+--   backup_box,
+--   taubenschutz,
+--   zusatzarbeiten,
+
 
 insert into inverters values ('Huawei', 'SUN2000-3KTL-M1', '3.300VA', 2, '98.2%', '10 Jahre*')
 

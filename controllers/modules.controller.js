@@ -267,7 +267,6 @@ class ModulesController {
   }
 
   async saveAngebotInfo(req, res) {
-    console.log("asaa");
     try {
       const combinedObject = req.body;
       console.log(combinedObject);
@@ -276,30 +275,34 @@ class ModulesController {
         angebotId = null,
         angebotType = null,
         montage = null,
-        underConstructions = null,
-        pvModule = null,
-        pvsolFile = null,
-        invertor = null,
-        battery = null,
-        wallbox = null,
-        taubenschutz = null,
-        zusatzarbeiten = null,
+        // underConstructions = null,
+        // pvModule = null,
+        // pvsolFile = null,
+        // invertor = null,
+        // iqCombiner = null,
+        // optimizer = null,
+        // battery = null,
+        // wallbox = null,
+        // backupBox = null,
+        // taubenschutz = null,
+        // zusatzarbeiten = null,
       } = combinedObject;
 
-      const result = await db.query(
-        "INSERT INTO angebot_info (angebotId, angebotType, montage, underConstructions, pvModule, pvsolFile, invertor, battery, wallbox, taubenschutz,  zusatzarbeiten) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)",
+      await db.query(
+        `
+        INSERT INTO angebot_info (
+          angebot_id, 
+          angebot_type, 
+          montage, 
+          
+        ) VALUES (
+          $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14
+        )
+      `,
         [
           angebotId,
           angebotType,
           montage,
-          underConstructions,
-          pvModule,
-          pvsolFile,
-          invertor,
-          battery,
-          wallbox,
-          taubenschutz,
-          zusatzarbeiten,
         ]
       );
 
