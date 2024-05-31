@@ -1,7 +1,7 @@
 const db = require("../db/db");
 const serviceSplitter = require("../utils/serviceSplitter");
 
-class DatabaseController {
+class ModulesController {
   async getModulesByTable(req, res) {
     try {
       const { table_name, producer } = req.query;
@@ -311,4 +311,4 @@ class DatabaseController {
   }
 }
 
-module.exports = new DatabaseController();
+module.exports = new ModulesController();

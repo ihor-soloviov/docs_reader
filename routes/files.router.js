@@ -3,7 +3,7 @@ const fileRouter = new Router();
 const upload = require("../middleware/uploads");
 const picturesStore = require("../middleware/picturesSaver");
 const filesController = require("../controllers/files.controller");
-const databaseController = require("../controllers/database.controller");
+const databaseController = require("../controllers/modules.controller");
 
 
 fileRouter.post("/sendFile", upload.single("docxFile"), filesController.pvSolFileParser);

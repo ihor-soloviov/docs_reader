@@ -1,6 +1,4 @@
 const db = require("../db/db");
-const serviceSplitter = require("../utils/serviceSplitter");
-
 
 class AdminController {
   addService = async (req, res) => {
@@ -12,11 +10,14 @@ class AdminController {
       }
       const services = await db.query(query);
 
-      if (services?.rows) {
-        res.send(services.rows)
+      if (services?.rows?.length) {
+        res.status(201).json(services.rows[0]);
+      } else {
+        res.status(500).json({ error: 'Failed to add service' });
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 
@@ -37,7 +38,11 @@ class AdminController {
         query.text = `UPDATE ${table_name} SET price = $1 WHERE id = $2`;
       }
 
-      await db.query(query);
+      const result = await db.query(query);
+
+      if (result.rowCount === 0) {
+        return res.status(404).send({ message: 'Service not found' });
+      }
 
       return res.status(200).send({ message: 'Service updated successfully' });
     } catch (error) {
