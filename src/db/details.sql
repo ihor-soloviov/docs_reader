@@ -1,7 +1,7 @@
 CREATE TABLE inverters (
   id SERIAL PRIMARY KEY NOT NULL,
-  hersteller VARCHAR(50),
-  modell VARCHAR(50),
+  producer VARCHAR(50),
+  model VARCHAR(50),
   leistung VARCHAR(50),
   MPP numeric,
   max_Wirkungsgrad VARCHAR(50),
@@ -16,13 +16,13 @@ CREATE TABLE batteries (
   guarantee VARCHAR(50),
   header VARCHAR(50),
   image VARCHAR(100)
-  -- price 
+  price numeric
 );
 
 CREATE TABLE optimizers (
   id SERIAL PRIMARY KEY NOT NULL,
-  hersteller VARCHAR(50),
-  modell VARCHAR(50),
+  producer VARCHAR(50),
+  model VARCHAR(50),
   garantie VARCHAR(50),
   header VARCHAR(50),
   image VARCHAR(100)
@@ -30,9 +30,9 @@ CREATE TABLE optimizers (
 
 CREATE TABLE smartmeters (
   id SERIAL PRIMARY KEY NOT NULL,
-  hersteller VARCHAR(50),
-  modell VARCHAR(50),
-  energieverbrauch VARCHAR(50),
+  producer VARCHAR(50),
+  model VARCHAR(50),
+  usage VARCHAR(50),
   header VARCHAR(50),
   image VARCHAR(100)
 );
@@ -81,17 +81,17 @@ CREATE TABLE angebots (
   montage JSONB[]
 );
 
--- under_constructions,
---   pvModule,
---   pvsol_file,
---   invertor,
---   iq_combiner,
---   optimizer,
---   battery,
---   wallbox,
---   backup_box,
---   taubenschutz,
---   zusatzarbeiten,
+  under_constructions,
+  pvModule,
+  pvsol_file,
+  invertor,
+  iq_combiner,
+  optimizer,
+  battery,
+  wallbox,
+  backup_box,
+  taubenschutz,
+  zusatzarbeiten,
 
 
 insert into inverters values ('Huawei', 'SUN2000-3KTL-M1', '3.300VA', 2, '98.2%', '10 Jahre*')

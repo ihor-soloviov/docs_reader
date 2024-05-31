@@ -266,43 +266,6 @@ class ModulesController {
     }
   }
 
-  async saveAngebotInfo(req, res) {
-    try {
-      const combinedObject = req.body;
-      console.log(combinedObject);
-
-      const {
-        angebotId = null,
-        angebotType = null,
-        montage = null,
-        // underConstructions = null,
-        // pvModule = null,
-        // pvsolFile = null,
-        // invertor = null,
-        // iqCombiner = null,
-        // optimizer = null,
-        // battery = null,
-        // wallbox = null,
-        // backupBox = null,
-        // taubenschutz = null,
-        // zusatzarbeiten = null,
-      } = combinedObject;
-
-      await db.query(
-        `INSERT INTO angebots (angebot_id, angebot_type, montage) VALUES ($1, $2, $3) RETURNING *`,
-        [
-          angebotId,
-          angebotType,
-          montage,
-        ]
-      );
-
-      res.send({ message: "Дані успішно збережено в таблицю." });
-    } catch (error) {
-      console.error("Помилка при збереженні даних:", error);
-      res.status(500).json({ error: "Помилка сервера" });
-    }
-  }
 }
 
 module.exports = new ModulesController();
