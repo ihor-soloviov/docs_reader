@@ -1,4 +1,5 @@
 const db = require("../db/db");
+const Angebot = require("../models/angebots");
 
 class AdminController {
   addService = async (req, res) => {
