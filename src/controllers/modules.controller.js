@@ -1,4 +1,5 @@
 const db = require("../db/db");
+const { ServiceSchema } = require("../models/services");
 const serviceSplitter = require("../utils/serviceSplitter");
 
 class ModulesController {
@@ -200,6 +201,18 @@ class ModulesController {
     } catch (error) {
       console.log(error);
       res.status(404).send("Помилка при додаванні рядку");
+    }
+  }
+
+  async addServices(req,res) {
+    try {
+      const services = req.body;
+
+      await ServiceSchema.insertMany(services);
+      res.status(200).json({ message: 'Services uploaded successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(404).send("Помилка при додаванні даних");
     }
   }
 
