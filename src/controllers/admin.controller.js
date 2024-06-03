@@ -1,7 +1,6 @@
 const db = require("../db/db");
 const Angebot = require("../models/angebots");
-const httpErrorMessageList = require("../variables/httpErrorMessageList")
-
+const axios = require('axios')
 class AdminController {
   addService = async (req, res) => {
     try {
@@ -134,13 +133,13 @@ class AdminController {
         return res.status(404).json({ message: 'Angebot not found' });
       }
 
-      const dealData = fetch(`https://mailer.work-set.eu/pdApi/deals/${angebot_id}`);
+      const dealData = await axios.get(`https://mailer.work-set.eu/pdApi/deals/${angebot_id}`);
+
       if (!dealData) {
         return res.status(404).json({ message: 'Deal not found' });
       }
 
-
-      res.status(200).json({ angebot, dealData });
+      res.status(200).json({ angebot, dealData: dealData.data });
     } catch (error) {
       console.log(error)
     }
