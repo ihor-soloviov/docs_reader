@@ -1,5 +1,6 @@
 const db = require("../db/db");
 const Angebot = require("../models/angebots");
+const httpErrorMessageList = require("../variables/httpErrorMessageList")
 
 class AdminController {
   addService = async (req, res) => {
@@ -114,6 +115,23 @@ class AdminController {
       await newAngebot.save();
 
       res.status(201).json({ message: 'Angebot successfully created', data: newAngebot });
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  getAngebotData = async (req, res) => {
+    try {
+      const { angebot_id } = req.body;
+
+      if (!angebot_id) {
+        res.status(400).json({ message: 'Bad Request' })
+      }
+
+      const angebot = await Angebot.findOne({ angebot_id })
+
+      res.send(angebot);
+
     } catch (error) {
       console.log(error)
     }

@@ -8,6 +8,7 @@ adminRouter.post('/addService', adminController.addService);
 adminRouter.post('/addServices', modulesController.addServices)
 adminRouter.patch('/changePrice', adminController.changePrice)
 adminRouter.post("/saveAngebotData", adminController.saveAngebotData);
+adminRouter.get('/getAngebotData', adminController.getAngebotData)
 
 
 module.exports = adminRouter;
