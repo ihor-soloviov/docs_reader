@@ -134,7 +134,21 @@ class AdminController {
         return res.status(404).json({ message: 'Angebot not found' });
       }
 
-      res.status(200).json(angebot);
+      const dealData = fetch(`https://mailer.work-set.eu/pdApi/deals/${angebot_id}`);
+      if (!dealData) {
+        return res.status(404).json({ message: 'Deal not found' });
+      }
+
+
+      res.status(200).json({ angebot, dealData });
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  getFullDataOfAngebot = async (req, res) => {
+    try {
+
     } catch (error) {
       console.log(error)
     }
