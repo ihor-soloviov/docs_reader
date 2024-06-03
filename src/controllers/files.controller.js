@@ -1,5 +1,6 @@
 const docxProcessor = require("../utils/fileReader");
 const generatePDF = require("../utils/puppeteer");
+const path = require("path");
 
 class FilesController {
   async pvSolFileParser(req, res) {
@@ -7,9 +8,9 @@ class FilesController {
       if (!req.file) {
         return res.status(400).send("Не було отримано файл");
       }
-      const result = await docxProcessor.searchKeywordsInDocx(
-        `../docs_reader/uploadsDocx/${req.file.filename}`
-      );
+
+      const filePath = path.resolve(__dirname, "../../uploads/uploadsDocx", req.file.filename);
+      const result = await docxProcessor.searchKeywordsInDocx(filePath);
 
       res.send(result);
     } catch (error) {
