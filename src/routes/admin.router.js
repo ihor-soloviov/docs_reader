@@ -5,7 +5,7 @@ const adminRouter = new Router()
 
 adminRouter.post('/addService', adminController.addService)
 adminRouter.patch('/changePrice', adminController.changePrice)
-adminRouter.post("/dataToGenerator", adminController.saveToMongo);
+adminRouter.post("/saveAngebotData", adminController.saveAngebotData);
 
 
 module.exports = adminRouter;

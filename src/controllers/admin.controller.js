@@ -106,7 +106,7 @@ class AdminController {
   //   }
   // }
 
-  saveToMongo = async (req, res) => {
+  saveAngebotData = async (req, res) => {
     try {
       const angebotData = req.body;
 
