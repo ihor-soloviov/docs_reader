@@ -1,5 +1,5 @@
 const db = require("../db/db");
-const { ServiceSchema } = require("../models/services");
+const { Service } = require("../models/services");
 const serviceSplitter = require("../utils/serviceSplitter");
 
 class ModulesController {
@@ -208,7 +208,7 @@ class ModulesController {
     try {
       const services = req.body;
 
-      await ServiceSchema.insertMany(services);
+      await Service.insertMany(services);
       res.status(200).json({ message: 'Services uploaded successfully' });
     } catch (error) {
       console.error(error);
