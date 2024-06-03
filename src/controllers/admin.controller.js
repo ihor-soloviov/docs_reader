@@ -133,7 +133,7 @@ class AdminController {
         return res.status(404).json({ message: 'Angebot not found' });
       }
 
-      const dealData = await axios.get(`https://mailer.work-set.eu/pdApi/deals/${angebot_id}`);
+      const dealData = await axios.get(`https://mailer.work-set.eu/pdApi/deals/${angebotId}`);
 
       if (!dealData) {
         return res.status(404).json({ message: 'Deal not found' });
