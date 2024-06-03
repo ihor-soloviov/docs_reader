@@ -122,7 +122,7 @@ class AdminController {
 
   getAngebotData = async (req, res) => {
     try {
-      const { angebot_id } = <req className="params"></req>;
+      const { angebot_id } = req.params;
 
       if (!angebot_id) {
         res.status(400).json({ message: 'Bad Request' })
