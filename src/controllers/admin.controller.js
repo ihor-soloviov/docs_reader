@@ -125,13 +125,16 @@ class AdminController {
       const { angebot_id } = req.params;
 
       if (!angebot_id) {
-        res.status(400).json({ message: 'Bad Request' })
+        return res.status(400).json({ message: 'Bad Request' })
       }
 
       const angebot = await Angebot.findOne({ angebot_id })
 
-      res.send(angebot);
+      if (!angebot) {
+        return res.status(404).json({ message: 'Angebot not found' });
+      }
 
+      res.status(200).json(angebot);
     } catch (error) {
       console.log(error)
     }
