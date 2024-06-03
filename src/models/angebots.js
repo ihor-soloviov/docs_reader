@@ -1,12 +1,13 @@
 const { Schema, model } = require('mongoose');
-const { ServiceSchema } = require('./services'); // Імпорт схеми, а не моделі
+const { ServiceSchema } = require('./services');
+const { PvsolFileItemScheme } = require('./pvsolFileItem')
 
 const AngebotSchema = new Schema({
   angebotId: { type: Number, unique: true, required: true },
   angebotType: { type: String, unique: false, required: true },
   montage: { type: [ServiceSchema], unique: false, required: false },
   underConstructions: { type: [ServiceSchema], unique: false, required: false },
-  pvModule: { type: [ServiceSchema], unique: false, required: false },
+  pvModule: { type: [PvsolFileItemScheme], unique: false, required: false },
   pvsolFileData: { type: [ServiceSchema], unique: false, required: false },
   invertor: { type: [ServiceSchema], unique: false, required: false },
   iqCombiner: { type: [ServiceSchema], unique: false, required: false },
