@@ -121,13 +121,13 @@ class AdminController {
 
   getAngebotData = async (req, res) => {
     try {
-      const { angebot_id } = req.query;
+      const { angebotId } = req.query;
 
-      if (!angebot_id) {
+      if (!angebotId) {
         return res.status(400).json({ message: 'Bad Request' })
       }
 
-      const angebot = await Angebot.findOne({ angebot_id })
+      const angebot = await Angebot.findOne({ angebotId })
 
       if (!angebot) {
         return res.status(404).json({ message: 'Angebot not found' });
