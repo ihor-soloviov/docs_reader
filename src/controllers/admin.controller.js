@@ -61,7 +61,14 @@ class AdminController {
 
     try {
       const regex = new RegExp(`^${angebotId}(\\.\\d+)?$`);
-    const items = await Angebot.find({ angebotId: { $regex: regex } });
+      const items = await Angebot.find({
+        "$expr": {
+          "$regexMatch": {
+            input: { $toString: "$angebotId" },
+            regex: regex
+          }
+        }
+      });
 
       if (items.length === 0) {
         return res.send(angebotId);
@@ -69,16 +76,16 @@ class AdminController {
 
       let maxVersion = 0;
       items.forEach(item => {
-        const versionMatch = item.angebotId.match(/^(\d+)(\.\d+)?$/);
-        if (versionMatch) {
-          const version = parseFloat(versionMatch[2] || 0);
+        const versionMatch = item.angebotId.toString().match(new RegExp(`^${angebotId.replace('.', '\\.')}(\\.\\d+)?$`));
+        if (versionMatch && versionMatch[1]) {
+          const version = parseFloat(versionMatch[1].substring(1));
           if (version > maxVersion) {
             maxVersion = version;
           }
         }
       });
 
-      const nextVersion = `${angebotId}.${(maxVersion + 0.1).toFixed(1)}`;
+      const nextVersion = `${angebotId}.${(maxVersion + 0.1).toFixed(1).split('.')[1]}`;
       res.send(nextVersion);
     } catch (error) {
       console.error(error);
