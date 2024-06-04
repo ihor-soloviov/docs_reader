@@ -61,7 +61,7 @@ class AdminController {
 
     try {
       const regex = new RegExp(`^${angebotId}(\\.\\d+)?$`);
-      const items = await Angebot.find({ angebotId: regex });
+    const items = await Angebot.find({ angebotId: { $regex: regex } });
 
       if (items.length === 0) {
         return res.send(angebotId);
