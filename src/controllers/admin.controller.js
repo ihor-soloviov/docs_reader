@@ -52,59 +52,39 @@ class AdminController {
     }
   };
 
-  // saveAngebotInfo = async (req, res) => {
-  //   try {
-  //     const combinedObject = req.body;
-  //     console.log(combinedObject);
+  getNextAngebotVersion = async (req, res) => {
+    const { angebotId } = req.query;
 
-  //     const {
-  //       angebotId = null,
-  //       angebotType = null,
-  //       montage = null,
-  //       underConstructions = null,
-  //       pvModule = null,
-  //       pvsolFile = null,
-  //       invertor = null,
-  //       iqCombiner = null,
-  //       optimizer = null,
-  //       battery = null,
-  //       wallbox = null,
-  //       backupBox = null,
-  //       taubenschutz = null,
-  //       zusatzarbeiten = null,
-  //     } = combinedObject;
+    if (!angebotId) {
+      return res.status(400).send("angebotId is required");
+    }
 
-  //     await db.query(
-  //       `
-  //       INSERT INTO angebots (
-  //         angebot_id, 
-  //         angebot_type, 
-  //         montage,
-  //         underConstructions
-  //         pvModule,
-  //         pvsolFile,
-  //         invertor,
-  //         iqCombiner,
-  //         optimizer,
-  //         battery,
-  //         wallbox,
-  //         backupBox,
-  //         taubenschutz,
-  //         zusatzarbeiten
-  //       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *`,
-  //       [
-  //         angebotId,
-  //         angebotType,
-  //         montage,
-  //       ]
-  //     );
+    try {
+      const regex = new RegExp(`^${angebotId}(\\.\\d+)?$`);
+      const items = await Angebot.find({ angebotId: regex });
 
-  //     res.send({ message: "Дані успішно збережено в таблицю." });
-  //   } catch (error) {
-  //     console.error("Помилка при збереженні даних:", error);
-  //     res.status(500).json({ error: "Помилка сервера" });
-  //   }
-  // }
+      if (items.length === 0) {
+        return res.send(angebotId);
+      }
+
+      let maxVersion = 0;
+      items.forEach(item => {
+        const versionMatch = item.angebotId.match(/^(\d+)(\.\d+)?$/);
+        if (versionMatch) {
+          const version = parseFloat(versionMatch[2] || 0);
+          if (version > maxVersion) {
+            maxVersion = version;
+          }
+        }
+      });
+
+      const nextVersion = `${angebotId}.${(maxVersion + 0.1).toFixed(1)}`;
+      res.send(nextVersion);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Помилка обробки запиту");
+    }
+  }
 
   saveAngebotData = async (req, res) => {
     try {
