@@ -96,6 +96,7 @@ class AdminController {
   saveAngebotData = async (req, res) => {
     try {
       const angebotData = req.body;
+      
 
       const newAngebot = new Angebot(angebotData);
       await newAngebot.save();
