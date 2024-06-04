@@ -1,6 +1,7 @@
 const db = require("../db/db");
-const Angebot = require("../models/angebots");
 const axios = require('axios')
+const Angebot = require("../models/angebots");
+const incrementLastDigit = require("../utils/getNextVersion")
 class AdminController {
   addService = async (req, res) => {
     try {
@@ -64,7 +65,7 @@ class AdminController {
       const items = await Angebot.find({
         "$expr": {
           "$regexMatch": {
-            input: { $toString: "$angebotId" },
+            input: "$angebotId",
             regex: regex
           }
         }
@@ -74,18 +75,12 @@ class AdminController {
         return res.send(angebotId);
       }
 
-      let maxVersion = 0;
-      items.forEach(item => {
-        const versionMatch = item.angebotId.toString().match(new RegExp(`^${angebotId.replace('.', '\\.')}(\\.\\d+)?$`));
-        if (versionMatch && versionMatch[1]) {
-          const version = parseFloat(versionMatch[1].substring(1));
-          if (version > maxVersion) {
-            maxVersion = version;
-          }
-        }
-      });
+      const maxAngebotId = items.reduce((max, obj) => {
+        const angebotId = parseFloat(obj.angebotId);
+        return angebotId > max ? angebotId : max;
+      }, -Infinity);
 
-      const nextVersion = `${angebotId}.${(maxVersion + 0.1).toFixed(1).split('.')[1]}`;
+      const nextVersion = maxAngebotId > parseFloat(angebotId) ? incrementLastDigit(maxAngebotId.toString()) : incrementLastDigit(angebotId);
       res.send(nextVersion);
     } catch (error) {
       console.error(error);
@@ -96,7 +91,6 @@ class AdminController {
   saveAngebotData = async (req, res) => {
     try {
       const angebotData = req.body;
-      
 
       const newAngebot = new Angebot(angebotData);
       await newAngebot.save();
