@@ -3,7 +3,7 @@ const { ServiceSchema } = require('./services');
 const { PvsolFileItemScheme } = require('./pvsolFileItem')
 
 const AngebotSchema = new Schema({
-  angebotId: { type: "decimal", bsonType: "decimal128", unique: true, required: true },
+  angebotId: { type: String, bsonType: "decimal128", unique: true, required: true },
   angebotType: { type: String, unique: false, required: true },
   montage: { type: [ServiceSchema], unique: false, required: false },
   underConstructions: { type: [ServiceSchema], unique: false, required: false },
