@@ -2,7 +2,7 @@ const multer = require("multer");
 const fs = require("fs");
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: function (req, _file, cb) {
     const angebotId = req.params.angebot_id;
     const typeOfDirectory = req.params.dir; // Переконайтеся, що цей параметр передається у маршруті
 
@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
       cb(error);
     }
   },
-  filename: function (req, file, cb) {
+  filename: function (_req, file, cb) {
     cb(null, file.originalname);
   },
 });

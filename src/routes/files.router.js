@@ -20,9 +20,7 @@ fileRouter.get("/create", filesController.generateAngebot);
 
 
 
-fileRouter.post("/addModule", databaseController.addModule);
-fileRouter.post("/addDataToColumn", databaseController.addDataToColumn);
-fileRouter.delete("/deleteRow", databaseController.deleteRow);
+fileRouter.post("/addComponent", databaseController.addComponent);
 
 
 module.exports = fileRouter;
