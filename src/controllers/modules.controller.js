@@ -24,7 +24,7 @@ class ModulesController {
       }
 
       let query = {
-        calculatorSection: section
+        angebotSection: section
       };
 
       if (producer) {
@@ -45,7 +45,7 @@ class ModulesController {
       const allResults = [];
 
       for (const section of componentSections) {
-        const queryResult = await Service.find({ calculatorSection: section });
+        const queryResult = await Service.find({ angebotSection: section });
         allResults.push(...queryResult);
       }
 
@@ -58,7 +58,7 @@ class ModulesController {
 
   async getServices(_req, res) {
     try {
-      const services = await Service.find({ calculatorSection: { $nin: componentSections } });
+      const services = await Service.find({ angebotSection: { $nin: componentSections } });
 
       res.send(services);
     } catch (error) {
@@ -75,7 +75,7 @@ class ModulesController {
         return res.status(400).send({ message: 'angebot_section is required' });
       }
 
-      const services = await Service.find({ calculatorSection: section })
+      const services = await Service.find({ angebotSection: section })
       const result = serviceSplitter(services);
       return res.send(result);
     } catch (error) {
