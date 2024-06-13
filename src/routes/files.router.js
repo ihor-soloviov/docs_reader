@@ -5,7 +5,6 @@ const picturesStore = require("../middleware/picturesSaver");
 const filesController = require("../controllers/files.controller");
 const databaseController = require("../controllers/modules.controller");
 
-
 fileRouter.post("/sendFile", upload.single("docxFile"), filesController.pvSolFileParser);
 
 fileRouter.post(
@@ -17,10 +16,6 @@ fileRouter.post(
 
 fileRouter.get("/create", filesController.generateAngebot);
 
-
-
-
 fileRouter.post("/addComponent", databaseController.addComponent);
-
 
 module.exports = fileRouter;

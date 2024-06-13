@@ -1,7 +1,8 @@
 const axios = require('axios')
 const Angebot = require("../models/angebots");
 const incrementLastDigit = require("../utils/getNextVersion")
-const { Service } = require("../models/services");
+const getPricesTable = require('../utils/getPricesTable')
+const { Service } = require("../models/services")
 
 class AdminController {
   addService = async (req, res) => {
@@ -115,6 +116,8 @@ class AdminController {
       if (!angebot) {
         return res.status(404).json({ message: 'Angebot not found' });
       }
+
+      const pricesTable = getPricesTable(angebot)
 
       const dealData = await axios.get(`https://mailer.work-set.eu/pdApi/deals/${angebotId}`);
 
