@@ -33,21 +33,25 @@ class AdminController {
   changePrice = async (req, res) => {
     try {
       const { id, newPrice } = req.body;
-
-      if (!id || !newPrice) {
-        return res.status(404).send({ message: 'Missed required field' });
+  
+      if (!id || newPrice === undefined) {
+        return res.status(400).send({ message: 'Missed required field' });
       }
-
+  
+      if (typeof newPrice !== 'number') {
+        return res.status(400).send({ message: 'New price must be a number' });
+      }
+  
       const updatedService = await Service.findByIdAndUpdate(
-        id,
-        { newPrice },
+        { _id: id },
+        { price: newPrice },
         { new: true }
       );
-
+  
       if (!updatedService) {
         return res.status(404).send("Service not found");
       }
-
+  
       res.send(updatedService);
     } catch (error) {
       console.error(error);

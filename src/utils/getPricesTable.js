@@ -94,3 +94,37 @@ const getPricesTable = (stepsData) => {
   const installation = aggregateData(stepsData.montage);
   // const inbetriebnahme = aggregateData(stepData.)
 }
+
+function calculateTotalPrices2(data) {
+  // Об'єкт для зберігання загальних цін за calculatorSection
+  const totalPrices = {};
+
+  // Функція для обробки масиву об'єктів
+  function processArray(array) {
+    array.forEach(item => {
+      const { angebotSection, price, count } = item;
+      const totalPrice = price * count;
+      
+      if (!totalPrices[angebotSection]) {
+        totalPrices[angebotSection] = 0;
+      }
+      
+      totalPrices[angebotSection] += totalPrice;
+    });
+  }
+
+  // Проходження по всім ключам об'єкта data
+  for (const key in data) {
+    if (Array.isArray(data[key])) {
+      processArray(data[key]);
+    }
+  }
+
+  // Формування масиву з результатами
+  const result = Object.keys(totalPrices).map(section => ({
+    angebotSection: section,
+    totalPrice: totalPrices[section]
+  }));
+
+  return result;
+}
