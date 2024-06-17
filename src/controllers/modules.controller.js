@@ -72,10 +72,10 @@ class ModulesController {
       const { section } = req.params;
 
       if (!section) {
-        return res.status(400).send({ message: 'calculatorSection is required' });
+        return res.status(400).send({ message: 'angebotSection is required' });
       }
 
-      const services = await Service.find({ calculatorSection: section })
+      const services = await Service.find({ angebotSection: section })
       const result = serviceSplitter(services);
       return res.send(result);
     } catch (error) {
