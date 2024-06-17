@@ -58,7 +58,7 @@ class ModulesController {
 
   async getServices(_req, res) {
     try {
-      const services = await Service.find({ calculatorSection: "Components" });
+      const services = await Service.find({ angebotSection: "Components" });
 
       res.send(services);
     } catch (error) {
@@ -72,10 +72,10 @@ class ModulesController {
       const { section } = req.params;
 
       if (!section) {
-        return res.status(400).send({ message: 'angebotSection is required' });
+        return res.status(400).send({ message: 'calculatorSection is required' });
       }
 
-      const services = await Service.find({ angebotSection: section })
+      const services = await Service.find({ calculatorSection: section })
       const result = serviceSplitter(services);
       return res.send(result);
     } catch (error) {
