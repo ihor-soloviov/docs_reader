@@ -58,7 +58,7 @@ class ModulesController {
 
   async getServices(_req, res) {
     try {
-      const services = await Service.find({ calculatorSection: { $nin: componentSections } });
+      const services = await Service.find({ calculatorSection: "Components" });
 
       res.send(services);
     } catch (error) {
@@ -72,7 +72,7 @@ class ModulesController {
       const { section } = req.params;
 
       if (!section) {
-        return res.status(400).send({ message: 'angebot_section is required' });
+        return res.status(400).send({ message: 'calculatorSection is required' });
       }
 
       const services = await Service.find({ calculatorSection: section })
