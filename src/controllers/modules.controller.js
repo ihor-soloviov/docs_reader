@@ -1,5 +1,6 @@
 const { Service } = require("../models/services");
 const serviceSplitter = require("../utils/serviceSplitter");
+const sortByTitle = require("../utils/sortByTitle");
 
 const componentSections = [
   'alpha_platte',
@@ -59,8 +60,12 @@ class ModulesController {
   async getServices(_req, res) {
     try {
       const services = await Service.find({ angebotSection: "Components" });
-
-      res.send(services);
+      if (services.length === 0) {
+        return res.status(204).send({message: "no services"})
+      }
+      const result = sortByTitle(services);
+      
+      res.send(result);
     } catch (error) {
       console.error(error)
       res.status(500).send(error.message);
