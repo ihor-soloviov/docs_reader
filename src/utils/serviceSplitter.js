@@ -1,5 +1,5 @@
 function serviceSplitter(services) {
-  const sortedServices = sortObjectsByTitle(services);
+  const sortedServices = sortObjectsByPrice(services);
   return sortedServices.reduce((acc, service) => {
     if (service.specific === 'single') {
       acc.single.push(service);
@@ -10,9 +10,9 @@ function serviceSplitter(services) {
   }, { single: [], select: [] });
 }
 
-function sortObjectsByTitle(objects) {
+function sortObjectsByPrice(objects) {
   return objects.sort((a, b) => {
-    return a.title.localeCompare(b.title, 'en', { numeric: true, sensitivity: 'base' });
+    return a.price - b.price;
   });
 }
 
