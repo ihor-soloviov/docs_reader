@@ -13,12 +13,14 @@ const componentSections = [
   'smartmeters',
   'iq_combiner',
   'wallbox',
+  'pvModule'
 ];
 
 class ModulesController {
   async getComponentsBySection(req, res) {
     try {
       const { section, producer } = req.query;
+      console.log(section, producer)
 
       if (!section) {
         return res.status(400).send("Parameter 'section' is required");
