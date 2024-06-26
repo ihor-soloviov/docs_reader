@@ -27,7 +27,7 @@ class ModulesController {
       }
 
       let query = {
-        calculatorSection: section
+        appSection: section
       };
 
       if (producer) {
@@ -48,7 +48,7 @@ class ModulesController {
       const allResults = [];
 
       for (const section of componentSections) {
-        const queryResult = await Service.find({ calculatorSection: section });
+        const queryResult = await Service.find({ appSection: section });
         allResults.push(...queryResult);
       }
 
@@ -63,10 +63,10 @@ class ModulesController {
     try {
       const services = await Service.find({ angebotSection: "Components" });
       if (services.length === 0) {
-        return res.status(204).send({message: "no services"})
+        return res.status(204).send({ message: "no services" })
       }
       const result = sortByTitle(services);
-      
+
       res.send(result);
     } catch (error) {
       console.error(error)
@@ -79,10 +79,10 @@ class ModulesController {
       const { section } = req.params;
 
       if (!section) {
-        return res.status(400).send({ message: 'calculatorSection is required' });
+        return res.status(400).send({ message: 'appSection is required' });
       }
 
-      const services = await Service.find({ calculatorSection: section })
+      const services = await Service.find({ appSection: section })
       const result = serviceSplitter(services);
       return res.send(result);
     } catch (error) {

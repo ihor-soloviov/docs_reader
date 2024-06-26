@@ -96,7 +96,7 @@ const getPricesTable = (stepsData) => {
 }
 
 function calculateTotalPrices2(data) {
-  // Об'єкт для зберігання загальних цін за calculatorSection
+  // Об'єкт для зберігання загальних цін за appSection
   const totalPrices = {};
 
   // Функція для обробки масиву об'єктів
@@ -104,11 +104,11 @@ function calculateTotalPrices2(data) {
     array.forEach(item => {
       const { angebotSection, price, count } = item;
       const totalPrice = price * count;
-      
+
       if (!totalPrices[angebotSection]) {
         totalPrices[angebotSection] = 0;
       }
-      
+
       totalPrices[angebotSection] += totalPrice;
     });
   }
