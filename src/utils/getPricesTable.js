@@ -90,11 +90,6 @@ const aggregateData = (items) => {
   }, { price: 0, count: 0 });
 }
 
-const getPricesTable = (stepsData) => {
-  const installation = aggregateData(stepsData.montage);
-  // const inbetriebnahme = aggregateData(stepData.)
-}
-
 function calculateTotalPrices2(data) {
   // Об'єкт для зберігання загальних цін за appSection
   const totalPrices = {};
